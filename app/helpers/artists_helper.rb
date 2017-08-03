@@ -11,6 +11,11 @@ module ArtistsHelper
       HTML
     elsif action == :edit && params[:artist_id].blank? 
       form_builder.collection_select :artist_id, Artist.all, :id, :name
+    elsif action == :new
+      <<-HTML
+        #{form_builder.hidden_field :artist_id}
+        <p>Artist Name: #{@artist.name}</p>
+      HTML
     else
       <<-HTML
         #{form_builder.hidden_field :artist_id}

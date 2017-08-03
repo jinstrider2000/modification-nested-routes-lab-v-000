@@ -26,12 +26,16 @@ class SongsController < ApplicationController
 
   def new
     @action = :new
-    if params[:artist_id].present?    
-      redirect_to artists_path unless Artist.exists?(params[:artist_id])
-      @artist = Artist.find_by(id: params[:artist_id])
-      @song = Song.new(artist_id: artist.id )
+    if params[:artist_id].present?   
+      if Artist.exists?(params[:artist_id])
+        @artist = Artist.find_by(id: params[:artist_id])
+        @song = Song.new(artist_id: @artist.id)
+      else
+        redirect_to artists_path
+      end
+    else
+      @song = Song.new
     end
-    @song = Song.new
   end
 
   def create
